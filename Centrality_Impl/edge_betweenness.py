@@ -4,7 +4,7 @@ import time
 nodes = int(input())
 edges = int(input())
 t0 = time.time()
-G = nx.barabasi_albert_graph(edges, nodes)
+G = nx.barabasi_albert_graph(nodes, edges)
 t01 = time.time() - t0
 t1 = time.time()
 A = cnx.edge_betweenness_centrality(G) # cugraph
