@@ -1,0 +1,20 @@
+import cugraph 
+import cudf 
+import time
+from cugraph.datasets import karate
+G = karate.get_graph(download=True)
+G=G.to_undirected()
+print("Main Graph:")
+print("Number of vertices" + str(G.number_of_vertices()))
+print("Numeer of edges" + str(G.number_of_edges()))
+t1=time.time()
+kcg= cugraph.ktruss_subgraph(G,3)
+t2=time.time()
+print(t2-t1)
+print("K-Truss Graph: ")
+print("Number of vertices "+ str(kcg.number_of_vertices()))
+print("Number of Edges: " + str(kcg.number_of_edges()))
+d=kcg.degrees()
+d.sort_values(by='out_degree', ascending=False)
+coo=kcg.view_edge_list()
+print(coo)

@@ -1,14 +1,18 @@
-import cugraph as cnx
+import cugraph
 import cudf
-import networkx as nx
 import time
+from cugraph.datasets import karate
+G= karate.get_graph(download=True)
+G=G.to_undirected()
+print("Main Graph")
+print("Number of vertices: " + str(G.number_of_vertices()))
+print("NUmber of edges :  " + str(G.number_of_edges()))
 t1=time.time()
-G = nx.barabasi_albert_graph(100,7)
-cg = cnx.Graph()
-cg.from_networkx(G)
+kcg=cugraph.ktruss_subgraph(G,3)
 t2=time.time()
-kcg = cnx.ktruss_subgraph(cg,7)
-t3=time.time()
 print(t2-t1)
-print(t3-t2)
-print(kcg)
+print("K-truss Graph")
+print("Numberof Vertices:" +str(kcg.number_of_vertices()))
+print("NUmber of edges"+str(kcg.number_of_edges()))
+
+
